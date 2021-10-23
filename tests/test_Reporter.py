@@ -3,7 +3,7 @@ from sharpener import Reporter
 
 
 
-def test_stats():
+def test_basic():
 
 	f = lambda n: [sqrt(i) for i in range(n)]
 
