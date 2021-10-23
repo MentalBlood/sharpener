@@ -12,8 +12,15 @@ def test_basic():
 
 	assert type(report) == dict
 	
-	for k, v in report.items():
+	assert 'time' in report
+	assert type(report['time']) == float
+	
+	assert 'calls' in report
+	for k, v in report['calls'].items():
+		
 		assert type(k) == str
 		assert type(v) == dict
+		
 		assert 'number' in v
-		assert 'time' in v
+		assert type(v['number']) == int
+		assert type(v['time']) == float
