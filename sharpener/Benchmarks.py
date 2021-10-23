@@ -6,10 +6,11 @@ import importlib
 
 class Benchmarks:
 
-	def __init__(self, path='.', prefix='benchmark_'):
+	def __init__(self, path='.', file_prefix='benchmark_', function_prefix='benchmark_'):
 		
 		self.path = path
-		self.prefix = prefix
+		self.file_prefix = file_prefix
+		self.function_prefix = function_prefix
 		self._modules = {}
 
 		self.scan()
@@ -22,17 +23,31 @@ class Benchmarks:
 
 		self._modules = {}
 		
-		for file_path in glob.iglob(f'{self.path}/**/{self.prefix}*.py', recursive=True):
+		for file_path in glob.iglob(f'{self.path}/**/{self.file_prefix}*.py', recursive=True):
 
 			file_name = os.path.basename(file_path)
 			without_ext = os.path.splitext(file_name)[0]
-			module_name = without_ext[len(self.prefix):]
+			module_name = without_ext[len(self.file_prefix):]
 			
 			spec = importlib.util.spec_from_file_location(module_name, file_path)
 			module = importlib.util.module_from_spec(spec)
 			spec.loader.exec_module(module)
-			
-			self._modules[module.__name__] = module
+
+			module_dict = {}
+			self._modules[module.__name__] = module_dict
+
+			for name in dir(module):
+				
+				something = getattr(module, name)
+				
+				if callable(something):
+					
+					if name.startswith(self.function_prefix):
+					
+						benchmark_name = name[len(self.function_prefix):]
+						module_dict[benchmark_name] = something
+
+
 
 
 
