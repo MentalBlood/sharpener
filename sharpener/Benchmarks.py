@@ -1,3 +1,4 @@
+import os
 import glob
 import importlib
 
@@ -5,10 +6,11 @@ import importlib
 
 class Benchmarks:
 
-	def __init__(self, path='.'):
+	def __init__(self, path='.', prefix='benchmark_'):
 		
 		self.path = path
-		self._modules = []
+		self.prefix = prefix
+		self._modules = {}
 
 		self.scan()
 	
@@ -18,15 +20,19 @@ class Benchmarks:
 	
 	def scan(self):
 
-		self._modules = []
+		self._modules = {}
 		
-		for file_path in glob.iglob(f'{self.path}/**/benchmark_*.py', recursive=True):
+		for file_path in glob.iglob(f'{self.path}/**/{self.prefix}*.py', recursive=True):
+
+			file_name = os.path.basename(file_path)
+			without_ext = os.path.splitext(file_name)[0]
+			module_name = without_ext[len(self.prefix):]
 			
-			spec = importlib.util.spec_from_file_location('module', file_path)
+			spec = importlib.util.spec_from_file_location(module_name, file_path)
 			module = importlib.util.module_from_spec(spec)
 			spec.loader.exec_module(module)
 			
-			self._modules.append(module)
+			self._modules[module.__name__] = module
 
 
 
