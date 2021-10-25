@@ -3,7 +3,7 @@ import glob
 import importlib
 
 
-from . import report
+from . import report, Reports
 
 
 
@@ -52,7 +52,7 @@ class Benchmarks:
 	
 	def run(self, kwargs, exclude_calls=[]):
 
-		reports = {}
+		reports = Reports()
 
 		for name in kwargs:
 

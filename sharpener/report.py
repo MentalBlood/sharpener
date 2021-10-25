@@ -16,7 +16,6 @@ def report(
 	p.enable()
 	for i in range(n):
 		f(**kwargs)
-	
 	p.disable()
 
 	r = p.report

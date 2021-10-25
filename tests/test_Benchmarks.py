@@ -1,4 +1,4 @@
-from sharpener import Benchmarks
+from sharpener import Benchmarks, Reports
 
 
 
@@ -25,7 +25,7 @@ def test_run():
 		}
 	})
 
-	assert type(reports) == dict
+	assert type(reports) == Reports
 	assert len(reports) == 1
 	assert 'time' in reports['math::sqrt']
 	assert 'calls' in reports['math::sqrt']
