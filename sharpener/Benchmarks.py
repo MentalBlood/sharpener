@@ -50,7 +50,7 @@ class Benchmarks:
 						benchmark_name = name[len(self.function_prefix):]
 						module_dict[benchmark_name] = something
 	
-	def run(self, kwargs):
+	def run(self, kwargs, exclude_calls=[]):
 
 		reports = {}
 
@@ -62,7 +62,7 @@ class Benchmarks:
 			module_name, function_name = name.split('::')
 			f = self._modules[module_name][function_name]
 
-			reports[name] = report(f, kwargs[name])
+			reports[name] = report(f, kwargs[name], exclude_calls=exclude_calls)
 		
 		return reports
 

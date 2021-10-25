@@ -29,3 +29,4 @@ def test_run():
 	assert len(reports) == 1
 	assert 'time' in reports['math::sqrt']
 	assert 'calls' in reports['math::sqrt']
+	assert not any([c in reports['math::sqrt']['calls'] for c in ["<method 'disable' of '_lsprof.Profiler' objects>"]])
