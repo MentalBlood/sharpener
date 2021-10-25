@@ -3,6 +3,9 @@ import glob
 import importlib
 
 
+from . import report
+
+
 
 class Benchmarks:
 
@@ -46,6 +49,22 @@ class Benchmarks:
 					
 						benchmark_name = name[len(self.function_prefix):]
 						module_dict[benchmark_name] = something
+	
+	def run(self, kwargs):
+
+		reports = {}
+
+		for name in kwargs:
+
+			if not '::' in name:
+				continue
+
+			module_name, function_name = name.split('::')
+			f = self._modules[module_name][function_name]
+
+			reports[name] = report(f, kwargs[name])
+		
+		return reports
 
 
 
