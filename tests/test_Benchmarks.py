@@ -22,11 +22,15 @@ def test_run():
 	reports = b.run({
 		'math::sqrt': {
 			'n': 10 ** 5
+		},
+		'list::index': {
+			'l': [i for i in range(10 ** 6)],
+			'e': 2
 		}
 	})
 
 	assert type(reports) == Reports
-	assert len(reports) == 1
+	assert len(reports) == 2
 	assert 'time' in reports['math::sqrt']
 	assert 'calls' in reports['math::sqrt']
 	assert not any([c in reports['math::sqrt']['calls'] for c in ["<method 'disable' of '_lsprof.Profiler' objects>"]])

@@ -19,7 +19,8 @@ if __name__ == '__main__':
 		author='mentalblood',
 		install_requires=[
 			'cProfile',
-			'pstats'
+			'pstats',
+			'rich'
 		],
 		packages=['sharpener']
 	)
