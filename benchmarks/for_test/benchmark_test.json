@@ -1,8 +1,8 @@
 {
-    "math::sqrt": {
+    "math::Sqrt": {
         "n": 100000
     },
-    "list::index": {
+    "list::Index": {
         "l": [1, 2, 3, 4, 5],
         "e": 2
     }

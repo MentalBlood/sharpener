@@ -2,7 +2,7 @@ from sharpener import Benchmark
 
 
 
-class benchmark_index(Benchmark):
+class Index(Benchmark):
 
 	def run(self, l, e):
 		l.index(e)

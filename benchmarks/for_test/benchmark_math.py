@@ -3,19 +3,19 @@ from sharpener import Benchmark
 
 
 
-class benchmark_sqrt(Benchmark):
+class Sqrt(Benchmark):
 
 	def run(self, n):
 		[sqrt(i) for i in range(n)]
 
 
-class benchmark_sqr(Benchmark):
+class Sqr(Benchmark):
 
 	def run(self, n):
 		[i ** 2 for i in range(n)]
 
 
-class benchmark_power(Benchmark):
+class Power(Benchmark):
 
 	def run(self, a, n):
 		a ** n

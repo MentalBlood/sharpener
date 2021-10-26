@@ -9,11 +9,10 @@ from . import report, Reports, Benchmark
 
 class Benchmarks:
 
-	def __init__(self, path='.', file_prefix='benchmark_', class_prefix='benchmark_'):
+	def __init__(self, path='.', file_prefix='benchmark_'):
 		
 		self.path = path
 		self.file_prefix = file_prefix
-		self.class_prefix = class_prefix
 		self._modules = {}
 
 		self.scan()
@@ -40,15 +39,11 @@ class Benchmarks:
 			self._modules[module.__name__] = module_dict
 
 			for name in dir(module):
-				
+
 				something = getattr(module, name)
 				
 				if hasattr(something, '__bases__') and Benchmark in something.__bases__:
-
-					if name.startswith(self.class_prefix):
-					
-						benchmark_name = name[len(self.class_prefix):]
-						module_dict[benchmark_name] = something
+					module_dict[name] = something
 	
 	def run(self, kwargs, exclude_calls=[]):
 
