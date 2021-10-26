@@ -25,7 +25,12 @@ class Reports(dict):
 
 		for benchmark_name, data in self.items():
 			
-			table.add_row(benchmark_name)
+			table.add_row(
+				benchmark_name,
+				'',
+				str(self.processNumber(sum([f['number'] for f in data['calls'].values()]))), 
+				str(self.processNumber(sum([f['time'] for f in data['calls'].values()])))
+			)
 			
 			for function_name in data['calls']:
 				table.add_row(
@@ -34,13 +39,6 @@ class Reports(dict):
 					str(self.processNumber(data['calls'][function_name]['number'])),
 					str(self.processNumber(data['calls'][function_name]['time']))
 				)
-			
-			table.add_row(
-				'', 
-				'', 
-				str(self.processNumber(sum([f['number'] for f in data['calls'].values()]))), 
-				str(self.processNumber(sum([f['time'] for f in data['calls'].values()])))
-			)
 		
 		console = Console()
 		with console.capture() as capture:
