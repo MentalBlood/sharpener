@@ -20,5 +20,5 @@ if __name__ == '__main__':
 		install_requires=[
 			'rich'
 		],
-		packages=['sharpener']
+		packages=['sharpener', 'sharpener.subcommands']
 	)
