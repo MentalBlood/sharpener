@@ -4,8 +4,7 @@ from . import Profile
 
 def report(
 	f, 
-	kwargs={}, 
-	n=1, 
+	n=1,
 	exclude_calls=[]
 ):
 
@@ -15,7 +14,7 @@ def report(
 
 	p.enable()
 	for i in range(n):
-		f(**kwargs)
+		f()
 	p.disable()
 
 	r = p.report

@@ -1,4 +1,5 @@
 from math import sqrt
+from functools import partial
 from sharpener import report
 
 
@@ -8,10 +9,7 @@ def test_basic():
 	f = lambda n: [sqrt(i) for i in range(n)]
 
 	r = report(
-		f=f, 
-		kwargs={
-			'n': 10 ** 4
-		},
+		f=partial(f, n=10**4), 
 		n=10
 	)
 

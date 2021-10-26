@@ -3,17 +3,17 @@ import glob
 import importlib
 
 
-from . import report, Reports
+from . import report, Reports, Benchmark
 
 
 
 class Benchmarks:
 
-	def __init__(self, path='.', file_prefix='benchmark_', function_prefix='benchmark_'):
+	def __init__(self, path='.', file_prefix='benchmark_', class_prefix='benchmark_'):
 		
 		self.path = path
 		self.file_prefix = file_prefix
-		self.function_prefix = function_prefix
+		self.class_prefix = class_prefix
 		self._modules = {}
 
 		self.scan()
@@ -43,11 +43,11 @@ class Benchmarks:
 				
 				something = getattr(module, name)
 				
-				if callable(something):
+				if hasattr(something, '__bases__') and Benchmark in something.__bases__:
+
+					if name.startswith(self.class_prefix):
 					
-					if name.startswith(self.function_prefix):
-					
-						benchmark_name = name[len(self.function_prefix):]
+						benchmark_name = name[len(self.class_prefix):]
 						module_dict[benchmark_name] = something
 	
 	def run(self, kwargs, exclude_calls=[]):
@@ -60,9 +60,14 @@ class Benchmarks:
 				continue
 
 			module_name, function_name = name.split('::')
-			f = self._modules[module_name][function_name]
+			bench_class = self._modules[module_name][function_name]
 
-			reports[name] = report(f, kwargs[name], exclude_calls=exclude_calls)
+			bench = bench_class(**kwargs[name])
+			bench.prepare()
+
+			reports[name] = report(bench.run, exclude_calls=exclude_calls)
+
+			bench.clean()
 		
 		return reports
 
