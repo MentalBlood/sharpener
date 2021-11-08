@@ -2,8 +2,7 @@ import os
 import glob
 import importlib
 
-
-from . import report, Reports, Benchmark
+from . import report, Reports, Benchmark, getMeanDict
 
 
 
@@ -45,11 +44,11 @@ class Benchmarks:
 				if hasattr(something, '__bases__') and Benchmark in something.__bases__:
 					module_dict[name] = something
 	
-	def run(self, kwargs, exclude_calls=[]):
+	def run(self, config, exclude_calls=[]):
 
 		reports = Reports()
 
-		for name in kwargs:
+		for name in config:
 
 			if not '::' in name:
 				continue
@@ -57,10 +56,18 @@ class Benchmarks:
 			module_name, function_name = name.split('::')
 			bench_class = self._modules[module_name][function_name]
 
-			bench = bench_class(**kwargs[name])
+			bench = bench_class(**{
+				k: v
+				for k, v in config[name].items()
+				if not (k.startswith('__') and k.endswith('__'))
+			})
 			bench.prepare()
 
-			reports[name] = report(bench.run, exclude_calls=exclude_calls)
+			n = config[name]['__n__'] if '__n__' in config[name] else 1
+			reports[name] = getMeanDict(*[
+				report(bench.run, exclude_calls=exclude_calls)
+				for i in range(n)
+			])
 
 			bench.clean()
 		
