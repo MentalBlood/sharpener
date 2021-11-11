@@ -3,9 +3,9 @@ from . import Profile
 
 
 def report(
-	f, 
-	n=1,
-	exclude_calls=[]
+	f,
+	calls_filter,
+	exclude_calls
 ):
 
 	exclude_calls.append("<method 'disable' of '_lsprof.Profiler' objects>")
@@ -13,11 +13,15 @@ def report(
 	p = Profile()
 
 	p.enable()
-	for i in range(n):
-		f()
+	f()
 	p.disable()
 
 	r = p.report
+	r['calls'] = {
+		k: v
+		for k, v in r['calls'].items()
+		if calls_filter(k)
+	}
 
 	for name in exclude_calls:
 		if name in r['calls']:

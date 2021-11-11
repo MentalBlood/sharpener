@@ -9,8 +9,9 @@ def test_basic():
 	f = lambda n: [sqrt(i) for i in range(n)]
 
 	r = report(
-		f=partial(f, n=10**4), 
-		n=10
+		partial(f, n=10**4),
+		lambda name: True,
+		[]
 	)
 
 	assert type(r) == dict
