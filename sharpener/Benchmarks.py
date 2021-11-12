@@ -61,7 +61,6 @@ class Benchmarks:
 				for k, v in config[name].items()
 				if not (k.startswith('__') and k.endswith('__'))
 			})
-			bench.prepare()
 
 			def calls_filter(x):
 				for inclusion in config[name]['__calls__']:
@@ -72,12 +71,12 @@ class Benchmarks:
 			n = config[name]['__n__'] if '__n__' in config[name] else 1
 			calls_filter = calls_filter if '__calls__' in config[name] else (lambda x: True)
 
-			reports[name] = getMeanDict(*[
-				report(bench.run, calls_filter, exclude_calls)
-				for i in range(n)
-			])
-
-			bench.clean()
+			reports_to_mean = []
+			for i in range(n):
+				bench.prepare()
+				reports_to_mean.append(report(bench.run, calls_filter, exclude_calls))
+				bench.clean()
+			reports[name] = getMeanDict(*reports_to_mean)
 		
 		return reports
 
