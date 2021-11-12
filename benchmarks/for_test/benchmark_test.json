@@ -1,6 +1,9 @@
 {
     "math::Sqrt": {
-        "n": 100000
+        "n": 100000,
+        "__calls__": [
+            "<built-in method math.sqrt>"
+        ]
     },
     "math::Sqr": {
         "n": 100000

@@ -64,7 +64,7 @@ class Benchmarks:
 			bench.prepare()
 
 			n = config[name]['__n__'] if '__n__' in config[name] else 1
-			calls_filter = (lambda name: name in config[name]['__calls__']) if '__calls__' in config[name] else (lambda name: True)
+			calls_filter = (lambda x: x in config[name]['__calls__']) if '__calls__' in config[name] else (lambda name: True)
 
 			reports[name] = getMeanDict(*[
 				report(bench.run, calls_filter, exclude_calls)
