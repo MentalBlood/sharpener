@@ -65,7 +65,7 @@ class Benchmarks:
 
 			def calls_filter(x):
 				for inclusion in config[name]['__calls__']:
-					if inclusion in x:
+					if inclusion.lower() in x.lower():
 						return True
 				return False
 

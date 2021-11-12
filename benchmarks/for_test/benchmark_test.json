@@ -2,7 +2,7 @@
     "math::Sqrt": {
         "n": 100000,
         "__calls__": [
-            "math.sqrt"
+            "math.SQRT"
         ]
     },
     "math::Sqr": {
