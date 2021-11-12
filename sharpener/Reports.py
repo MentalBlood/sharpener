@@ -9,9 +9,15 @@ class Reports(dict):
 	def __init__(
 		self, 
 		*args,
-		processTime=lambda n: '{:f}'.format(round(n, ndigits=8))
+		processTime=lambda n: '{:f}'.format(round(n, ndigits=8)),
+		sort_by='time',
+		is_sort_reversed=True,
 	):
+
 		self.processTime = processTime
+		self.sort_by = sort_by
+		self.is_sort_reversed=is_sort_reversed
+	
 		super().__init__(*args)
 
 	def __str__(self):
@@ -31,13 +37,23 @@ class Reports(dict):
 				str(sum([f['number'] for f in data['calls'].values()])), 
 				str(self.processTime(sum([f['time'] for f in data['calls'].values()]))),
 			)
+
+			functions = list(data['calls'].items())
+
+			if self.sort_by in ['number', 'time']:
+				functions.sort(key=lambda i: i[1][self.sort_by])
+			else:
+				functions.sort(key=lambda i: i[0])
 			
-			for function_name in data['calls']:
+			if self.is_sort_reversed:
+				functions.reverse()
+			
+			for name, info in functions:
 				table.add_row(
 					'', 
-					function_name, 
-					str(data['calls'][function_name]['number']),
-					str(self.processTime(data['calls'][function_name]['time'])),
+					name, 
+					str(info['number']),
+					str(self.processTime(info['time'])),
 				)
 			
 			table.rows[-1].end_section = True
