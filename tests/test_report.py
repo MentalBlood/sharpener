@@ -10,7 +10,6 @@ def test_basic():
 
 	r = report(
 		partial(f, n=10**4),
-		lambda name: True,
 		[]
 	)
 
