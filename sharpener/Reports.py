@@ -34,8 +34,8 @@ class Reports(dict):
 			table.add_row(
 				benchmark_name,
 				'',
-				str(sum([f['number'] for f in data['calls'].values()])), 
-				str(self.processTime(sum([f['time'] for f in data['calls'].values()]))),
+				'',
+				str(self.processTime(data['time']))
 			)
 
 			functions = list(data['calls'].items())
