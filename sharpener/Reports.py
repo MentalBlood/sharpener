@@ -9,14 +9,10 @@ class Reports(dict):
 	def __init__(
 		self, 
 		*args,
-		processTime=lambda n: '{:f}'.format(round(n, ndigits=8)),
-		sort_by='time',
-		is_sort_reversed=True,
+		processTime=lambda n: '{:f}'.format(round(n, ndigits=8))
 	):
 
 		self.processTime = processTime
-		self.sort_by = sort_by
-		self.is_sort_reversed=is_sort_reversed
 	
 		super().__init__(*args)
 
@@ -38,15 +34,7 @@ class Reports(dict):
 				str(self.processTime(data['time']))
 			)
 
-			functions = list(data['calls'].items())
-
-			if self.sort_by in ['number', 'time']:
-				functions.sort(key=lambda i: i[1][self.sort_by])
-			else:
-				functions.sort(key=lambda i: i[0])
-			
-			if self.is_sort_reversed:
-				functions.reverse()
+			functions = data['calls']
 			
 			for name, info in functions:
 				table.add_row(

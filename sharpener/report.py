@@ -4,7 +4,6 @@ from . import Profile
 
 def report(
 	f,
-	calls_filter,
 	exclude_calls
 ):
 
@@ -17,11 +16,6 @@ def report(
 	p.disable()
 
 	r = p.report
-	r['calls'] = {
-		k: v
-		for k, v in r['calls'].items()
-		if calls_filter(k)
-	}
 
 	for name in exclude_calls:
 		if name in r['calls']:

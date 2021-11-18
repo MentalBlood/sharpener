@@ -62,21 +62,44 @@ class Benchmarks:
 				if not (k.startswith('__') and k.endswith('__'))
 			})
 
-			def calls_filter(x):
-				for inclusion in config[name]['__calls__']:
-					if inclusion.lower() in x.lower():
-						return True
-				return False
-
 			n = config[name]['__n__'] if '__n__' in config[name] else 1
-			calls_filter = calls_filter if '__calls__' in config[name] else (lambda x: True)
 
 			reports_to_mean = []
 			for i in range(n):
 				bench.prepare()
-				reports_to_mean.append(report(bench.run, calls_filter, exclude_calls))
+				reports_to_mean.append(report(bench.run, exclude_calls))
 				bench.clean()
+			
 			reports[name] = getMeanDict(*reports_to_mean)
+			print(f"reports['{name}']['calls'] is {type(reports[name]['calls'])}")
+		
+		def getCallsFilter(name):
+
+			if not '__calls__' in config[name]:
+				return lambda x: True
+
+			inclusions = config[name]['__calls__']
+			
+			def calls_filter(x):
+				for i in inclusions:
+					if i.lower() in x.lower():
+						return True
+				return False
+			
+			return calls_filter
+
+		for name, r in reports.items():
+			
+			r['calls'] = [
+				(k, v)
+				for k, v in r['calls'].items()
+				if getCallsFilter(name)(k)
+			]
+			r['calls'].sort(key=lambda i: i[1]['time'])
+			r['calls'].reverse()
+
+			if '__limit__' in config[name]:
+				r['calls'] = r['calls'][:config[name]['__limit__']]
 		
 		return reports
 
