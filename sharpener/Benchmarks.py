@@ -1,6 +1,7 @@
 import os
 import glob
 import importlib
+from tqdm.auto import tqdm
 
 from . import report, Reports, Benchmark, getMeanDict
 
@@ -48,7 +49,7 @@ class Benchmarks:
 
 		reports = Reports()
 
-		for name in config:
+		for name in tqdm(list(config.keys()), desc='Running benchmarks'):
 
 			if not '::' in name:
 				continue
