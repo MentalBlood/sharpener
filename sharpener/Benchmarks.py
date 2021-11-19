@@ -71,7 +71,6 @@ class Benchmarks:
 				bench.clean()
 			
 			reports[name] = getMeanDict(*reports_to_mean)
-			print(f"reports['{name}']['calls'] is {type(reports[name]['calls'])}")
 		
 		def getCallsFilter(name):
 
