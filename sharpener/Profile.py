@@ -15,7 +15,8 @@ class Profile(cProfile.Profile):
 			'calls': {
 				k[2]: {
 					'number': v[0], 
-					'time': v[2]
+					'self_time': v[2],
+					'time': v[3]
 				} 
 				for k, v in stats.stats.items()
 			}

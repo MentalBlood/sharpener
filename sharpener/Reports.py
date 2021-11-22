@@ -23,12 +23,14 @@ class Reports(dict):
 		table.add_column('Benchmark', style='magenta')
 		table.add_column('Function', style='blue')
 		table.add_column('Number', justify='right')
+		table.add_column('Self time', style='white', justify='right')
 		table.add_column('Time', style='white', justify='right')
 
 		for benchmark_name, data in self.items():
 			
 			table.add_row(
 				benchmark_name,
+				'',
 				'',
 				'',
 				str(self.processTime(data['time']))
@@ -41,6 +43,7 @@ class Reports(dict):
 					'', 
 					name, 
 					str(info['number']),
+					str(self.processTime(info['self_time'])),
 					str(self.processTime(info['time'])),
 				)
 			
