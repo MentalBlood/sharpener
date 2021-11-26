@@ -23,8 +23,9 @@ class Reports(dict):
 		table.add_column('Benchmark', style='magenta')
 		table.add_column('Function', style='blue')
 		table.add_column('Number', justify='right')
-		table.add_column('Self time', style='white', justify='right')
-		table.add_column('Time', style='white', justify='right')
+		table.add_column('Self time', justify='right')
+		table.add_column('Time', justify='right')
+		table.add_column('Percentage', justify='left')
 
 		for benchmark_name, data in self.items():
 			
@@ -33,18 +34,22 @@ class Reports(dict):
 				'',
 				'',
 				'',
-				str(self.processTime(data['time']))
+				str(self.processTime(data['time'])),
+				'100%'
 			)
 
 			functions = data['calls']
 			
-			for name, info in functions:
+			for i, (name, info) in enumerate(functions):
+				percentage = 100 * info['time'] / data['time']
 				table.add_row(
 					'', 
 					name, 
 					str(info['number']),
 					str(self.processTime(info['self_time'])),
 					str(self.processTime(info['time'])),
+					f"{round(percentage)}%"
+					# style=['white', 'grey37'][i % 2]
 				)
 			
 			table.rows[-1].end_section = True
