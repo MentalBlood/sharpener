@@ -1,4 +1,4 @@
-# Sharpener
+# 🗡 Sharpener
 
 Handy benchmarking tool
 
@@ -11,7 +11,7 @@ Handy benchmarking tool
 
 <br/>
 
-## Installing
+## 💿 Installing
 
 ```python
 python -m pip install sharpener-mentalblood
@@ -19,7 +19,7 @@ python -m pip install sharpener-mentalblood
 
 <br/>
 
-## Writing benchmarks
+## ✒️ Writing benchmarks
 
 Real world example (see [bottomless_ReJSON](https://github.com/mentalblood/bottomless_ReJSON)):
 
@@ -81,7 +81,7 @@ class with_index(Benchmark):
 
 <br/>
 
-## Configuring input parameters
+## 📄 Configuring input parameters
 
 File with name `benchmarks_default.json` treated as default config file
 
@@ -127,7 +127,7 @@ Parameters other then special will be passed to `prepare`, `run` and `clean` ben
 
 <br/>
 
-## Launching benchmarks
+## 📊 Launching benchmarks
 
 For default config:
 
