@@ -1,6 +1,6 @@
 # 🗡 Sharpener
 
-Handy benchmarking tool
+Handy profiling/benchmarking tool
 
 <br/>
 
