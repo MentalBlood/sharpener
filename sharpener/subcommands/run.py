@@ -11,7 +11,8 @@ args = [
 	('names',						'type',		'required',		'help',																'default'),
 	(['-r', '--root'],				str,		False,			'Root folder path',													'.'),
 	(['-cp', '--config_prefix'],	str,		False,			'Config file name prefix',											'benchmark_'),
-	(['-c', '--config'],			str,		False,			'Config name (file name is "<config prefix>_<config name>.json")',	'default')
+	(['-c', '--config'],			str,		False,			'Config name (file name is "<config prefix>_<config name>.json")',	'default'),
+	(['-p', '--profile'],			int,		False,			'Profile or not',													1)
 ]
 
 
@@ -31,6 +32,6 @@ def handler(args):
 	
 	b = Benchmarks(args.root)
 
-	reports = b.run(config)
+	reports = b.run(config, profile=bool(args.profile))
 
 	print(reports)

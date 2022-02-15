@@ -45,7 +45,7 @@ class Benchmarks:
 				if hasattr(something, '__bases__') and Benchmark in something.__bases__:
 					module_dict[name] = something
 	
-	def run(self, config, exclude_calls=[]):
+	def run(self, config, exclude_calls=[], profile=True):
 
 		reports = Reports()
 
@@ -68,7 +68,7 @@ class Benchmarks:
 			reports_to_mean = []
 			for i in range(n):
 				bench.prepare()
-				reports_to_mean.append(report(bench.run, exclude_calls))
+				reports_to_mean.append(report(bench.run, exclude_calls, profile))
 				bench.clean()
 			
 			reports[name] = getMeanDict(*reports_to_mean)
