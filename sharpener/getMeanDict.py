@@ -36,7 +36,7 @@ def getMeanDict(*args):
 
 			if type(d[k]) == dict:
 				if not k in result:
-					result[k] = getMeanDict(*[e[k] for e in args])
+					result[k] = getMeanDict(*[e[k] for e in args if k in e])
 			
 			else:
 				if not k in result:
